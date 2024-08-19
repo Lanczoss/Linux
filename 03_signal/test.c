@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    int num = 3;
-    char buf[1024] = {0};
-    scanf("%*s", 3, buf);
+    int width = 10;
+    char buf[1024]={0};
+    printf("%*s\n", width, buf);
 }
