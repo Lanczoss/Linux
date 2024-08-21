@@ -1,6 +1,5 @@
 #include <cstage.h>
 
-
 typedef struct
 {
     pthread_mutex_t lock;
