@@ -22,10 +22,16 @@ void *sell(void *m)
             THREAD_ERROR_CHECK(ret, "unlock");
             break;
         }
-        if(pm->ticket_num > 0 && rand() % 1 < 0.5)
+        double random_num = rand() / (double)RAND_MAX;
+        if(pm->ticket_num > 0 && random_num < 0.5)
         {
             pm->ticket_num--;
             printf("sell once, %d remain\n", pm->ticket_num);
+        }
+        else
+        {
+            printf("random num = %f\n", random_num);
+            printf("No sell!\n");
         }
         ret = pthread_mutex_unlock(&pm->lock);
         THREAD_ERROR_CHECK(ret, "unlock");
