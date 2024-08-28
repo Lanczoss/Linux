@@ -50,4 +50,19 @@ int sendMsg(int local_socket, int net_fd);
 //第二个传入传出参数是接收的netfd
 int recvMsg(int local_socket, int *net_fd);
 
+//子进程用于发送数据的函数
+//参数需要对端发来的文件名
+int sendFile(int net_fd, char *filename);
+
+//子进程发送文件的总逻辑
+//参数是传输用的net_fd
+int toClientFile(int net_fd);
+
+//向buf指向的内存中接收指定长度的数据
+//第一个参数是传输用的net_fd
+//第二个参数是指向的内存指针
+//第三个参数是指定接收的长度
+int recvn(int net_fd, void *buf, int length);
+
+
 #endif

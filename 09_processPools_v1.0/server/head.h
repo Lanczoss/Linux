@@ -50,4 +50,8 @@ int sendMsg(int local_socket, int net_fd);
 //第二个传入传出参数是接收的netfd
 int recvMsg(int local_socket, int *net_fd);
 
+//子进程用于发送数据的函数
+//参数只需要net_fd
+int sendFile(int net_fd);
+
 #endif

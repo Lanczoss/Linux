@@ -11,17 +11,14 @@ int init_pool(son_status_t *son_list, int num)
         //创建本地socket
         int socket_fd[2];
         int ret = socketpair(AF_LOCAL, SOCK_STREAM, 0, socket_fd);
-        if(ret == -1)
-        {
-            perror("socketpair");
-            return -1;
-        }
+        ERROR_CHECK(ret, -1, "socketpair");
         pid_t pid = fork();
         if(pid == 0)
         {
             //son使用socket_fd[0]通信
             close(socket_fd[1]);
             ret = do_worker(socket_fd[0]);
+            ERROR_CHECK(ret, -1, "do_worker");
         }
         else
         {
@@ -31,6 +28,7 @@ int init_pool(son_status_t *son_list, int num)
             son_list[i].pid = pid;
             son_list[i].local_socket = socket_fd[1];
             son_list[i].son_status = FREE;
+            printf("No.%d process created, socket_fd = %d!\n", i, socket_fd[1]);
         }
     }
     return 0;
@@ -44,8 +42,11 @@ int net_fd_to_son(son_status_t *son_list, int num, int net_fd)
     {
         if(son_list[i].son_status == FREE)
         {
-            sendMsg(son_list[i].local_socket, net_fd);
+            int ret = sendMsg(son_list[i].local_socket, net_fd);
+            ERROR_CHECK(ret, -1, "sendMsg");
             son_list[i].son_status = BUSY;
+            printf("sendMsg net_fd = %d success!\n", net_fd);
+            break;
         }
     }
     return 0;
