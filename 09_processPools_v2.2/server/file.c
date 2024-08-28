@@ -70,10 +70,17 @@ int sendFile(int net_fd, char *filename)
     void *p = mmap(NULL, file_size, PROT_READ | PROT_WRITE, MAP_SHARED, file_fd, 0);
     ERROR_CHECK(p, MAP_FAILED, "mmap");
 
-    //sendfile函数直接发送至网卡
-    ssize_t rret = sendfile(net_fd, file_fd, NULL, file_size);
-    ERROR_CHECK(rret, -1, "sendfile");
+    ssize_t rret = send(net_fd, p, file_size, MSG_NOSIGNAL);
+    printf("rret = %ld\n", rret);
+    if(rret < file_size)
+    {
+        printf("对端关闭\n");
+        close(file_fd);
+        munmap(p, file_size);
+        return 0;
+    }
     munmap(p, file_size);
+
     
     close(file_fd);
     printf("send successfully to %d!\n", net_fd);
