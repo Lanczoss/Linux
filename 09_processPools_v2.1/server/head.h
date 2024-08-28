@@ -58,11 +58,4 @@ int sendFile(int net_fd, char *filename);
 //参数是传输用的net_fd
 int toClientFile(int net_fd);
 
-//向buf指向的内存中接收指定长度的数据
-//第一个参数是传输用的net_fd
-//第二个参数是指向的内存指针
-//第三个参数是指定接收的长度
-int recvn(int net_fd, void *buf, int length);
-
-
 #endif

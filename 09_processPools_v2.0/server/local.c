@@ -34,7 +34,7 @@ int sendMsg(int local_socket, int net_fd)
     //发送
     int ret = sendmsg(local_socket, &msg, 0);
     ERROR_CHECK(ret, -1, "sendmsg");
-    /* free(cmsg); */
+    free(cmsg);
     return 0;
 }
 
@@ -67,6 +67,6 @@ int recvMsg(int local_socket, int *net_fd)
     void *p = CMSG_DATA(cmsg);
     int *fd = (int*)p;
     *net_fd = *fd;
-    /* free(cmsg); */
+    free(cmsg);
     return 0;
 }
