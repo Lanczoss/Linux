@@ -40,7 +40,7 @@ int sendFile(int net_fd, char *filename)
             //发送完毕
             break;
         }
-        printf("train size = %ld\n", train.size);
+        printf("\rtrain size = %ld", train.size);
         //发送一部分，先发送长度
         ssize_t rret = send(net_fd, &train, sizeof(ssize_t) + train.size, MSG_NOSIGNAL);
         if(rret == -1)
@@ -49,7 +49,7 @@ int sendFile(int net_fd, char *filename)
         }
     }
     close(file_fd);
-    printf("send successfully to %d!\n", net_fd);
+    printf("\nsend successfully to %d!\n", net_fd);
     return 0;
 }
 

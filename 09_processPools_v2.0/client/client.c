@@ -1,11 +1,5 @@
 #include <cstage.h>
 
-//可以向buf指向的内存中接收指定长度(length)的数据
-int recvn(int net_fd, void *buf, int length)
-{
-    return 0;
-}
-
 int main(int argc, char *argv[])
 {
     ARGS_CHECK(argc, 3);
@@ -35,6 +29,7 @@ int main(int argc, char *argv[])
     ERROR_CHECK(ret, -1, "ftruncate");
     printf("need file size = %ld\n", file_size);
 
+    double currsize = 0;
     //循环读取文件
     while(1)
     {
@@ -48,15 +43,17 @@ int main(int argc, char *argv[])
             break;
         }
         char buf[1024] = {0};
-        rret = recv(socket_fd, buf, recv_size, MSG_WAITALL);
-        printf("write size = %ld\n", rret);
+        ssize_t rret = recv(socket_fd, buf, recv_size, MSG_WAITALL);
+        currsize += rret;
+        printf("\rwrite size percent = %.2lf %%", 100 * (double)currsize / file_size);
         if(rret == 0)
         {
             //读取完毕
+            printf("\nDone.\n");
             break;
         }
         //写入文件
-        rret = write(file_fd, buf, recv_size);
+        rret = write(file_fd, buf, rret);
         ERROR_CHECK(rret, -1, "write");
     }
     close(socket_fd);
