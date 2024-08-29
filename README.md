@@ -1,7 +1,7 @@
-# cpp_learn_warehouse
+# liunx_learn_warehouse
 
 #### 介绍
-cpp的学习仓库
+linux的学习仓库
 
 #### 学习进度
 
