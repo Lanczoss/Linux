@@ -1,4 +1,4 @@
-# liunx_learn_warehouse
+# linux_learn_warehouse
 
 #### 介绍
 linux的学习仓库
