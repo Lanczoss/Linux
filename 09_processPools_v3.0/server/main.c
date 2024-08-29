@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
                 close(epoll_fd);
                 close(pipefd[0]);
                 close(pipefd[1]);
+                printf("Clean complete! Main now quit.\n");
                 exit(0);
             }
             //如果有新链接到来
