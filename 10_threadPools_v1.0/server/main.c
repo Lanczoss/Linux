@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
                 ret = pthread_mutex_unlock(&status.lock);
                 ERROR_CHECK(ret, -1, "unlock");
                 printf("wait threads.\n");
-                for(int j = 0; j < 8; j++)
+                for(int j = 0; j < status.num; j++)
                 {
                     ret = pthread_join(status.id_list[j], NULL);
                     ERROR_CHECK(ret, -1, "join");
